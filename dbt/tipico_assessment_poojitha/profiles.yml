@@ -1,0 +1,15 @@
+tipico_assessment_poojitha:
+  target: dev
+  outputs:
+    dev:
+      type: redshift
+      host: <your-redshift-host>
+      user: <your-redshift-username>
+      password: <your-redshift-password>
+      port: 5439
+      dbname: <your-database-name>
+      schema: core
+      threads: 1
+      keepalives_idle: 240
+      connect_timeout: 10
+      search_path: public

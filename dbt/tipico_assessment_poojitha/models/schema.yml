@@ -1,0 +1,139 @@
+version: 2
+
+models:
+  - name: events
+    description: "This table contains details of events."
+    columns:
+      - name: event_id
+        description: "Unique identifier for each event."
+        tests:
+          - unique
+          - not_null
+      - name: start_time
+        description: "The start time of the event."
+        tests:
+          - not_null
+      - name: message_time
+        description: "The message time of the event."
+        tests:
+          - not_null
+      - name: sport_type
+        description: "The sport type of the event."
+      - name: match_state
+        description: "The match state of the event."
+      - name: status
+        description: "The status of the event."
+      - name: market_count
+        description: "The number of markets in the event."
+      - name: event_type
+        description: "The type of event."
+      - name: updates_count
+        description: "The count of updates for the event."
+      - name: event_name
+        description: "The name of the event."
+      - name: last_modified_time
+        description: "The last modified time of the event."
+        tests:
+          - not_null
+
+  - name: participants
+    description: "This table contains details of participants."
+    columns:
+      - name: participant_id
+        description: "Unique identifier for each participant."
+        tests:
+          - unique
+          - not_null
+      - name: event_id
+        description: "Foreign key referencing the events table."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('events')
+              field: event_id
+      - name: name
+        description: "Name of the participant."
+      - name: position
+        description: "Position of the participant."
+      - name: abbreviation
+        description: "Abbreviation of the participant."
+
+  - name: groups
+    description: "This table contains details of groups."
+    columns:
+      - name: group_id
+        description: "Unique identifier for each group."
+        tests:
+          - unique
+          - not_null
+      - name: event_id
+        description: "Foreign key referencing the events table."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('events')
+              field: event_id
+      - name: name
+        description: "Name of the group."
+      - name: parent_group_id
+        description: "Foreign key referencing the parent group."
+      - name: parent_group_name
+        description: "Name of the parent group."
+      - name: parent_parent_group_id
+        description: "Foreign key referencing the parent of the parent group."
+      - name: parent_parent_group_name
+        description: "Name of the parent of the parent group."
+
+  - name: markets
+    description: "This table contains details of markets."
+    columns:
+      - name: market_id
+        description: "Unique identifier for each market."
+        tests:
+          - unique
+          - not_null
+      - name: event_id
+        description: "Foreign key referencing the events table."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('events')
+              field: event_id
+      - name: name
+        description: "Name of the market."
+      - name: type
+        description: "Type of the market."
+      - name: status
+        description: "Status of the market."
+      - name: most_balanced_line
+        description: "Indicates if the market has the most balanced line."
+      - name: sgp_eligible
+        description: "Indicates if the market is SGP eligible."
+
+  - name: outcomes
+    description: "This table contains details of outcomes."
+    columns:
+      - name: outcome_id
+        description: "Unique identifier for each outcome."
+        tests:
+          - unique
+          - not_null
+      - name: market_id
+        description: "Foreign key referencing the markets table."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('markets')
+              field: market_id
+      - name: name
+        description: "Name of the outcome."
+      - name: is_traded
+        description: "Indicates if the outcome is traded."
+      - name: format_decimal
+        description: "Decimal format of the outcome odds."
+      - name: format_american
+        description: "American format of the outcome odds."
+      - name: status
+        description: "Status of the outcome."
+      - name: true_odds
+        description: "True odds of the outcome."
